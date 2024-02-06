@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block body %} 
+<style>
+body {
+	background-image : linear-gradient(-270deg, #052ca0, hsl(30, 100%, 50%))
+}
+/* Style to create scroll bar in dropdown */ 
+.scrollable-dropdown{
+    height: auto;
+    max-height:320px;  /* Increase / Decrease value as per your need */
+    overflow-x: hidden;
+}
+.input-group.md-form.form-sm.form-1 input{
+  border: 1px solid #bdbdbd;
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+}
+.input-group.md-form.form-sm.form-2 input {
+  border: 1px solid #bdbdbd;
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+.input-group.md-form.form-sm.form-2 input.red-border {
+  border: 1px solid #ef9a9a;
+}
+.input-group.md-form.form-sm.form-2 input.lime-border {
+  border: 1px solid #cddc39;
+}
+.input-group.md-form.form-sm.form-2 input.amber-border {
+  border: 1px solid #ffca28;
+}
+</style>
+<div class="container" style='margin-top: 50px;'>
+  <div class="input-group md-form form-sm form-2 pl-0">
+    <input id="searchInput" class="form-control my-0 py-1 amber-border" type="text" placeholder="Search..." aria-label="Search" value='{{ resp }}'>
+    <div>
+      <button onclick="submitForm()" class='btn btn-warning' style='width: 75px; height: 35px;'>Submit</button>
+    </div>
+  </div>
+</div>
+{% if answer %}
+<div class="album py-5">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      {% for article in articles %}
+      <div class="col">
+        <div class="card shadow-sm">
+          <a style='text-decoration: none;color:black' href="/article/{{article.uuid}}">
+          <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+              <title>Placeholder</title>
+              <image href="{{ url_for('static', filename='photo/' +  article.uuid + '.png') }}" width="100%" height="100%" preserveAspectRatio="xMidYMid slice"></image>
+              <text x="50%" y="50%" fill="#eceeef" dy=".3em"></text>
+            </svg>
+            <div class="card-body">
+            <p class="card-text">{{ article.name }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <p>Price: ${{ article.price }}</p>
+            </div>
+          </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+{% else %}
+<div class="container text-center mt-5">
+      <h1>Not Found</h1>
+    </div>
+{% endif %}
+<script>
+  function submitForm() {
+    // Get the value of the input field
+    var searchTerm = document.getElementById('searchInput').value;
+
+    // Redirect to the desired URL with the search term
+    window.location.href = "http://127.0.0.1:5000/search?response=" + encodeURIComponent(searchTerm);
+  }
+</script>
+
+<script>
+$(document).ready(function(e){
+	      $('.search-panel .dropdown-menu').find('a').click(function(e) {
+				e.preventDefault();
+				var param = $(this).attr("href").replace("#","");
+				var concept = $(this).text();
+				$('.search-panel span#search_concept').text(concept);
+				$('.input-group #search_param').val(param);
+		   	});
+	      });
+var a = document.getElementByTagName('a').item(0);
+$(a).on('keyup', function(evt){
+  console.log(evt);
+  if(evt.keycode === 13){
+    
+  } 
+}); 
+</script>
+{% endblock %}

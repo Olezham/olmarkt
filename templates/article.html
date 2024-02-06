@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+
+{% block body %} 
+
+<style>
+	.product-block {
+		border: 1px solid #ddd;
+		border-radius: 10px;
+		padding: 15px;
+		margin: 15px;
+		text-align: center;
+	}
+
+	.product-image {
+		max-width: 100%;
+		border-radius: 8px;
+	}
+</style>
+
+<div style= "background-image: linear-gradient(-110deg, #052ca0, #ff8000); height: 50vw;">
+
+<div class="container">
+<div class="row">
+	<div class="col-md-6 mx-auto">
+		<div class="product-block">
+			<img src="{{ url_for('static', filename='photo/' + data.uuid + '.png') }}" alt="Product Image" class="product-image">
+			<h4 class='mt-3'>{{ data.name }}</h4>
+			<p>Creator:{{data.creator}}</p>
+			<p>Price: ${{ data.price }}</p>
+			<p>About article: {{ data.about }}</p>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+
+{% block body %} 
+
+<div style="height: 100vh; /* Set the height of the container */
+background-image: linear-gradient(-110deg, #052ca0, #ff8000);
+background-size: cover; padding-top: 50px;">
+
+<div class="container mt-5">
+    <div class="card bg-transparent border-0">
+        <div class="card-body p-5 rounded">
+            <h2 class="mb-4">Add article</h2>
+            
+            <form method="post" enctype="multipart/form-data">
+                <!-- Имя товара -->
+                <div class="form-group">
+                    <label for="productName">Name of article:</label>
+                    <input type="text" class="form-control" id="productName" name="name" required minlength="4">
+                </div>
+
+                <!-- Описание товара -->
+                <div class="form-group">
+                    <label for="productDescription">About article:</label>
+                    <textarea class="form-control" id="productDescription" name="about" rows="3" required minlength="10" maxlength="256"></textarea>
+                </div>
+
+                <!-- Цена товара -->
+                <div class="form-group">
+                    <label for="productPrice">Price:</label>
+                    <input type="number" class="form-control" id="productPrice" name="price" required>
+                </div>
+
+                <!-- Загрузка фото -->
+                <div class="form-group">
+                    <label for="productImage">Upload photo:</label>
+                    <input type="file" class="form-control-file" id="productImage" name="image" accept="image/*" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

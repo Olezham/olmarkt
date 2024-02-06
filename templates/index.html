@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block body %} 
+
+
+
+
+
+    <section class="py-5 text-center container" style="width: 100wh; /* Set the height of the container */
+    background-image: linear-gradient(-110deg, #052ca0, #ff8000);
+    background-size: cover;
+    border-radius: 16px;
+    margin-top: 30px;">
+      <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+          <h1 class="fw-light">OLmarkt</h1>
+          <p class="lead text-body-secondary">Explore Olmarkt – a curated collection of quality finds. Uncover unique stories in every product. Shop purposefully, shop Olmarkt.</p>
+          <p>
+            <a href="/registration" class="btn btn-primary my-2">Sell something</a>
+            <a href="" class="btn btn-secondary my-2">Start buying</a>
+          </p>
+        </div>
+      </div>
+    </section>
+    <div class="album py-5 bg-body-tertiary">
+      <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          {% for article in articles %}
+          <div class="col">
+            <div class="card shadow-sm">
+              <a style='text-decoration: none;color:black' href="/article/{{article.uuid}}">
+              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                  <title>Placeholder</title>
+                  <image href="{{ url_for('static', filename='photo/' +  article.uuid + '.png') }}" width="100%" height="100%" preserveAspectRatio="xMidYMid slice"></image>
+                  <text x="50%" y="50%" fill="#eceeef" dy=".3em"></text>
+                </svg>
+                <div class="card-body">
+                <p class="card-text">{{ article.name }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p>Price: ${{ article.price }}</p>
+                </div>
+              </a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}       
+{% endblock %}
