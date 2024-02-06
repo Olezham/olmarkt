@@ -4,6 +4,7 @@ import uuid
 
 import time, datetime
 
+import os
 
 from config import host, username, password, db
 
@@ -79,7 +80,9 @@ def log(email,password):
         print(str(ex))
 
 def add_articles(name,about,price,image,creator):
-    image.save('static/photo/' + str(uid)+'.png')
+    print('[LOG] try to save photo')
+    image.save('olmarkt/static/photo/' + str(uid)+'.png')
+    print('[LOG] photo saved')
     with connection.cursor() as cursor:
         try:
             insert_query = "INSERT INTO `article` (name,uuid,about,price,creator,createdate) VALUES (%s,%s,%s,%s,%s,%s)"
@@ -89,7 +92,7 @@ def add_articles(name,about,price,image,creator):
         except Exception as ex:
             print(f"Error:{ex}")
             return False
-        
+
 def get_user_articles(email):
     try:
         with connection.cursor() as cursor:
@@ -106,7 +109,7 @@ def get_user_articles(email):
 def get_article(uuid):
     try:
         with connection.cursor() as cursor:
-            
+
             query = "SELECT * FROM `article` WHERE uuid = %s "
             cursor.execute(query, (uuid))
             result = cursor.fetchone()
@@ -124,7 +127,7 @@ def get_all_articels():
             return result
     except Exception as ex:
         print(str(ex))
-        
+
 def get_articles_by_name(name):
     try:
         with connection.cursor() as cursor:
@@ -135,3 +138,6 @@ def get_articles_by_name(name):
     except Exception as ex:
         print(str(ex))
 
+def ensure_directory_exists(directory):
+    if not os.path.exists(directory):
+        os.makedirs(directory)

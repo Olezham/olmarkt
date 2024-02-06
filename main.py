@@ -32,7 +32,7 @@ def login():
             else:
                 print('ошибка логирования')
                 return render_template('login.html')
-            
+
         except:
             print('not existed combination with email and password')
     else:
@@ -79,6 +79,7 @@ def add_article():
         about = request.form['about']
         price = request.form['price']
         image = request.files['image']
+        print('[LOG] call add_article function')
         if add_articles(name,about,price,image,session['email']):
             print('article added')
             return redirect(url_for('cabinet'))
