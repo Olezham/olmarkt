@@ -1,7 +1,7 @@
 
 from flask import Flask, render_template, session, request, redirect, url_for
 
-from mysqll import *
+from mysql import *
 
 import secrets
 
