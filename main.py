@@ -17,7 +17,6 @@ def inject_user():
 
 @app.route('/')
 def index():
-    print(get_all_articels())
     return render_template('index.html', articles=get_all_articels())
 
 @app.route('/login',methods=['GET','POST'])
@@ -30,9 +29,8 @@ def login():
                 session['email'] = email
                 return redirect(url_for('cabinet'))
             else:
-                print('ошибка логирования')
                 return render_template('login.html')
-            
+
         except:
             print('not existed combination with email and password')
     else:
@@ -44,7 +42,6 @@ def registration():
         email = request.form['email']
         password = request.form['password']
         repeatpassword = request.form['repeatpassword']
-        print(password == repeatpassword)
         if password == repeatpassword:
             if not exist_email(email):
                 if reg(email,password):
@@ -67,7 +64,6 @@ def registration():
 def cabinet():
     if 'email' not in session:
         return redirect(url_for('login'))
-    print(get_user_articles(session['email']))
     return render_template('cabinet.html', email=session['email'],articles = get_user_articles(session['email']))
 
 @app.route('/add-article',methods=['GET','POST'])
@@ -79,6 +75,7 @@ def add_article():
         about = request.form['about']
         price = request.form['price']
         image = request.files['image']
+        print('[LOG] call add_article function')
         if add_articles(name,about,price,image,session['email']):
             print('article added')
             return redirect(url_for('cabinet'))
