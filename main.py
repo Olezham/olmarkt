@@ -1,7 +1,7 @@
 
 from flask import Flask, render_template, session, request, redirect, url_for
 
-from mysql import *
+from mysqll import *
 
 import secrets
 
@@ -17,8 +17,10 @@ def inject_user():
 
 @app.route('/')
 def index():
-    print(get_all_articels())
-    return render_template('index.html', articles=get_all_articels())
+    articles = get_all_articels()
+    if articles is None:
+        articles = []
+    return render_template('index.html', articles=articles)
 
 @app.route('/login',methods=['GET','POST'])
 def login():

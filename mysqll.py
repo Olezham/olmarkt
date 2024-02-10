@@ -8,7 +8,6 @@ from config import host, username, password, db
 current_data = datetime.datetime.now()
 joindata = time.mktime(current_data.timetuple())
 salt = bcrypt.gensalt()
-uid = uuid.uuid4()
 
 def establish_connection():
     try:
@@ -98,7 +97,10 @@ def add_articles(name, about, price, image, creator):
         connection = establish_connection()
     if connection is not None:
         try:
-            image.save('static/photo/' + str(uid)+'.png')
+            uid = generate_uuid()
+            print("[LOG] Try to save image")
+            image.save('olmarkt/static/photo/' + str(uid)+'.png')
+            print("[LOG] Image was sucssesful uploaded")
             with connection.cursor() as cursor:
                 insert_query = "INSERT INTO `article` (name,uuid,about,price,creator,createdate) VALUES (%s,%s,%s,%s,%s,%s)"
                 cursor.execute(insert_query, (name, uid, about, price, creator, joindata))
@@ -147,7 +149,7 @@ def get_article(uuid):
         print("Connection is not established.")
         return None
 
-def get_all_articles():
+def get_all_articels():
     global connection
     if connection is None:
         connection = establish_connection()
@@ -182,3 +184,6 @@ def get_articles_by_name(name):
     else:
         print("Connection is not established.")
         return None
+
+def generate_uuid():
+    return str(uuid.uuid4())
