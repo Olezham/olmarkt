@@ -106,6 +106,23 @@ def search():
         answer = 0
     return render_template('search.html', articles = get_articles_by_name(response), resp=response, answer=answer)
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/delete-article/<string:uuid>')
+def delete_article(uuid):
+    if 'email' not in session:
+        return redirect(url_for('login'))
+    print(get_owner(uuid))
+    print(session['email'])
+    data = get_owner(uuid)
+    if data['creator'] == session['email']:
+        del_article(uuid)
+        return redirect(url_for('cabinet'))
+    else:
+        print('net prav')
+        return redirect(url_for('cabinet'))
 
 if __name__ == '__main__':
     app.run(debug=True)

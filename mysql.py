@@ -3,7 +3,7 @@ import bcrypt
 import uuid
 
 import time, datetime
-
+import os
 
 from config import host, username, password, db
 
@@ -115,3 +115,20 @@ def get_articles_by_name(name):
             result = cursor.fetchall()
             return result
 
+def get_owner(uuid):
+    connection = establish_connection()
+    with connection:
+        with connection.cursor() as cursor:
+            query = "SELECT creator FROM `article` WHERE uuid = %s"
+            cursor.execute(query,(uuid))
+            result = cursor.fetchone()
+            return result
+        
+def del_article(uuid):
+    connection = establish_connection()
+    with connection:
+        with connection.cursor() as cursor:
+            query = "DELETE FROM article WHERE uuid = %s"
+            cursor.execute(query,(uuid))
+            connection.commit()
+    os.remove('static/photo/' + uuid +'.png')
