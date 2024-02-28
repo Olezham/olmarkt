@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 
-{% block body %} 
+{% block body %}
 
 <div style="height: 100vh; /* Set the height of the container */
 background-image: linear-gradient(-110deg, #052ca0, #ff8000);
@@ -11,7 +11,7 @@ background-size: cover; padding-top: 50px;">
     <div class="card bg-transparent border-0">
         <div class="card-body p-5 rounded">
             <h2 class="mb-4">Add article</h2>
-            
+
             <form method="post" enctype="multipart/form-data">
                 <!-- Имя товара -->
                 <div class="form-group">
@@ -28,7 +28,7 @@ background-size: cover; padding-top: 50px;">
                 <!-- Цена товара -->
                 <div class="form-group">
                     <label for="productPrice">Price:</label>
-                    <input type="number" class="form-control" id="productPrice" name="price" required>
+                    <input type="number" class="form-control" id="productPrice" name="price" min="0" required>
                 </div>
 
                 <!-- Загрузка фото -->

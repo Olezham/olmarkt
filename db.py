@@ -1,6 +1,6 @@
 from mysql import establish_connection
 import subprocess
-import sys, os
+import sys
 
 
 def create_tables():
@@ -18,7 +18,7 @@ def create_tables():
                     createdate VARCHAR(45) NOT NULL
                 )
             """
-            
+
             try:
                 cursor.execute(create_table_article)
                 cursor.execute()
@@ -39,13 +39,13 @@ def create_tables():
                 print("[LOG] Tables was seccsessfuly created")
             except Exception as e:
                 print("[ERROR]:", e)
-                
+
 def create_virtualenv():
-    # Creating virtual einveiromnet 
+    # Creating virtual einveiromnet
     subprocess.run([sys.executable, "-m", "venv", "venv"], check=True)
-    
+
 def main():
     create_virtualenv()
-    
+
 if __name__ == "__main__":
     main()

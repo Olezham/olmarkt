@@ -10,7 +10,6 @@ from config import host, username, password, db
 current_data = datetime.datetime.now()
 joindata = time.mktime(current_data.timetuple())
 salt = bcrypt.gensalt()
-uid = uuid.uuid4()
 
 
 def establish_connection():
@@ -21,7 +20,10 @@ def establish_connection():
         database=db,
         cursorclass=pymysql.cursors.DictCursor
     )
-    return connection   
+    return connection
+
+def generate_uid():
+    return str(uuid.uuid4())
 
 def reg(email, password):
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
@@ -64,16 +66,17 @@ def log(email, password):
 
 
 def add_articles(name,about,price,image,creator):
-    image.save('static/photo/' + str(uid)+'.png')
+    uid = generate_uid()
+    image.save('olmarkt/static/photo/' + str(uid)+'.png')
     connection = establish_connection()
-    with connection:    
+    with connection:
         with connection.cursor() as cursor:
             insert_query = "INSERT INTO `article` (name,uuid,about,price,creator,createdate) VALUES (%s,%s,%s,%s,%s,%s)"
             cursor.execute(insert_query,(name,uid,about,price,creator,joindata))
             connection.commit()
             return True
-        
-        
+
+
 def get_user_articles(email):
     connection = establish_connection()
 
@@ -83,7 +86,7 @@ def get_user_articles(email):
             cursor.execute(query, (email))
             result = cursor.fetchall()
             return result
-        
+
 
 def get_article(uuid):
     connection = establish_connection()
@@ -104,7 +107,7 @@ def get_all_articels():
             cursor.execute(query)
             result = cursor.fetchall()
             return result
-        
+
 def get_articles_by_name(name):
     connection = establish_connection()
 
@@ -123,7 +126,7 @@ def get_owner(uuid):
             cursor.execute(query,(uuid))
             result = cursor.fetchone()
             return result
-        
+
 def del_article(uuid):
     connection = establish_connection()
     with connection:
@@ -131,4 +134,4 @@ def del_article(uuid):
             query = "DELETE FROM article WHERE uuid = %s"
             cursor.execute(query,(uuid))
             connection.commit()
-    os.remove('static/photo/' + uuid +'.png')
+    os.remove('olmarkt/static/photo/' + uuid +'.png')
