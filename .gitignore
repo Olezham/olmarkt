@@ -1,3 +1,7 @@
 venv
+.venv
+.env
 static/photo
 config.py
+__pycache__/
+*.py[cod]
