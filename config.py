@@ -1,4 +1,6 @@
-host = 'olmarkt.mysql.pythonanywhere-services.com'
-username = 'olmarkt'
-password = '369963oleg'
-db = 'olmarkt$db'
+import os
+
+host = os.getenv("OLMARKT_DB_HOST", "")
+username = os.getenv("OLMARKT_DB_USER", "")
+password = os.getenv("OLMARKT_DB_PASSWORD", "")
+db = os.getenv("OLMARKT_DB_NAME", "")
